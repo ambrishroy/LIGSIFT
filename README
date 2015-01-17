@@ -1,0 +1,42 @@
+######################################################################
+#   .____    .___  ________  _________._________________________     #
+#   |    |   |   |/  _____/ /   _____/|   \_   _____/\__    ___/     # 
+#   |    |   |   /   \  ___ \_____  \ |   ||    __)    |    |        #
+#   |    |___|   \    \_\  \/        \|   ||     \     |    |        #
+#   |_______ \___|\______  /_______  /|___|\___  /     |____|        #
+#           \/           \/        \/          \/                    #
+#                                                                    #
+######################################################################
+
+Requirements
+============
+1. CMake 2.4 or newer
+2. A C++ compiler (e.g. GCC)
+3. OpenBabel
+   Installation instruction (If you have already installed OpenBabel, skip to LIGSIFT compilation)    
+   (a) Download OpenBabel from
+       http://sourceforge.net/projects/openbabel/files/openbabel/2.3.2/openbabel-2.3.2.tar.gz/download
+   (b) tar zxf openbabel-2.3.2.tar.gz
+   (c) mkdir -p obbuild
+   (d) cd obbuild
+   (e) cmake ../openbabel-2.3.2 
+       If you don't have root permissions or you want to install at a different location:
+       cmake ../openbabel-2.3.2 -DCMAKE_INSTALL_PREFIX=/home/ambrish/bin/
+   (f) make 
+   (g) make test
+   (i) make install
+If everything worked perfectly, you should have an obabel executable as /usr/local/bin/obabel
+
+Compiling LIGSIFT
+=================
+4. Go to directory where you downloaded LIGSIFT.tar.bz2 and extract the files 
+   tar -jxvf LIGSIFT.tar.bz2 
+5. cd LIGSIFT
+6. vi Makefile
+   You may need to change your compiler (if not GCC) and CFLAGS and LDFLAGS (if you have installed OpenBabel at non-default location)
+7. make
+8. Everything should compile normally and you will have LIGSIFT executable in the directory.
+
+You can enjoy fishing molecules now :)
+
+Please send your comments and suggestions to : ambrish.roy@biology.gatech.edu   
