@@ -9,8 +9,8 @@
 ######################################################################
 CC  = g++
 CFLAGS	=-c -O3 -Wall
-INCLUDE =-I/home/nehamby/ambrish/bin/openbabel/include/openbabel-2.0
-LDFLAGS =-rdynamic /home/nehamby/ambrish/bin/openbabel/lib/libopenbabel.so -Wl,-rpath,/home/nehamby/ambrish/bin/openbabel/lib/
+INCLUDE =-I/home/ambrish/bin/openbabel/include/openbabel-2.0
+LDFLAGS =-rdynamic /home/ambrish/bin/openbabel/lib/libopenbabel.so -Wl,-rpath,/home/ambrish/bin/openbabel/lib/
 LIBS	=-lm
 EXE = LIGSIFT
 OBJ = main.o sm.o pharm.o coor.o alignment.o rmsd.o lap.o comm.o eigen.o
