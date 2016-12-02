@@ -26,6 +26,6 @@ double norm(Coordinate & p);
 // Find directionality cosine similarity of pharmacophoric points
 double cosine(Coordinate& p1, Coordinate& p2);
 // Rotate and Traslate
-double transformation(vector<PharmacophorePoint>&, double u[3][3],double t[3]);
+void transformation(vector<PharmacophorePoint>&, double u[3][3],double t[3]);
 
 #endif  // ALIGNMENT_H

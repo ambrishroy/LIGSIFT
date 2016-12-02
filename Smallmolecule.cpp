@@ -94,7 +94,7 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
       }
     }
   }	
-  for (int i(0); i < rings.size(); ++i){
+  for (unsigned int i(0); i < rings.size(); ++i){
     int rsize = rings[i]->Size();
     double var = 180/rsize;
     double radii = 1.4/(2*sin(var*PI/180));
@@ -134,8 +134,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
   
   if(OH.Match(OBmol)){
     maplist    = OH.GetUMapList();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();				
 	flag_hydroxyl[atomno]=true;
@@ -161,8 +161,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
   }    
   if(HBA1.Match(OBmol)){
     maplist    = HBA1.GetUMapList();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();
 	if( flag_hydroxyl[atomno]){
@@ -176,8 +176,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
   }
   if(HBA2.Match(OBmol)){
     maplist    = HBA2.GetUMapList();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();
 	if( flag_hydroxyl[atomno]){
@@ -191,8 +191,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
   }  
   if(HBD1.Match(OBmol)){
     maplist    = HBD1.GetUMapList();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();
 	if( flag_hydroxyl[atomno]){
@@ -206,8 +206,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
   }  
   if(HBD2.Match(OBmol)){
     maplist    = HBD2.GetUMapList();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();
 	if( flag_hydroxyl[atomno]){
@@ -223,8 +223,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho1.GetUMapList();
     std::vector<int> groups;
     groups.clear();
-    for(int m(0); m < maplist.size(); ++m){
-      for(int a(0);a<maplist[m].size();++a){
+    for(unsigned int m(0); m < maplist.size(); ++m){
+      for(unsigned int a(0);a<maplist[m].size();++a){
 	OBAtom* atom = OBmol.GetAtom(maplist[m][a]);
 	atomno=atom->GetIdx();
 	groups.push_back(atomno);
@@ -236,8 +236,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho2.GetUMapList(); 
     std::vector<int> groups; 
     groups.clear(); 
-    for(int m(0); m < maplist.size(); ++m){ 
-      for(int a(0);a<maplist[m].size();++a){ 
+    for(unsigned int m(0); m < maplist.size(); ++m){ 
+      for(unsigned int a(0);a<maplist[m].size();++a){ 
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]); 
         atomno=atom->GetIdx(); 
         groups.push_back(atomno); 
@@ -249,8 +249,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho3.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -262,8 +262,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho4.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -275,8 +275,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho5.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -288,8 +288,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho6.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -301,8 +301,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho7.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -314,8 +314,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho8.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -327,8 +327,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho9.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -340,8 +340,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho10.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -353,8 +353,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho11.GetUMapList();  
     std::vector<int> groups;  
     groups.clear();  
-    for(int m(0); m < maplist.size(); ++m){  
-      for(int a(0);a<maplist[m].size();++a){  
+    for(unsigned int m(0); m < maplist.size(); ++m){  
+      for(unsigned int a(0);a<maplist[m].size();++a){  
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);  
         atomno=atom->GetIdx();  
         groups.push_back(atomno);  
@@ -366,8 +366,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho12.GetUMapList();   
     std::vector<int> groups;   
     groups.clear();   
-    for(int m(0); m < maplist.size(); ++m){   
-      for(int a(0);a<maplist[m].size();++a){   
+    for(unsigned int m(0); m < maplist.size(); ++m){   
+      for(unsigned int a(0);a<maplist[m].size();++a){   
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);   
         atomno=atom->GetIdx();   
         groups.push_back(atomno);   
@@ -379,8 +379,8 @@ SmallMolecule::getMoleculeData(OpenBabel::OBMol& OBmol){
     maplist = Pho13.GetUMapList();    
     std::vector<int> groups;    
     groups.clear();    
-    for(int m(0); m < maplist.size(); ++m){    
-      for(int a(0);a<maplist[m].size();++a){    
+    for(unsigned int m(0); m < maplist.size(); ++m){    
+      for(unsigned int a(0);a<maplist[m].size();++a){    
         OBAtom* atom = OBmol.GetAtom(maplist[m][a]);    
         atomno=atom->GetIdx();    
         groups.push_back(atomno);    
@@ -394,10 +394,10 @@ void
 SmallMolecule::InitPharmacophore(OpenBabel::OBMol& OBmol, vector<PharmacophorePoint>& Phar){
   Phar.clear();
 
-  int charge, atomno=0;
+  int atomno=0;
   std::vector<OpenBabel::OBAtom*>::iterator ai;
   for (OpenBabel::OBAtom* a = OBmol.BeginAtom(ai); a; a = OBmol.NextAtom(ai)){
-    OBPairData *chg = (OBPairData*) a->GetData("FFPartialCharge");
+    //    OBPairData *chg = (OBPairData*) a->GetData("FFPartialCharge");
     int charge = a->GetFormalCharge();
     atomno     = a->GetIdx();   
     double vd  = radii[atomno];
@@ -493,7 +493,7 @@ SmallMolecule::InitPharmacophore(OpenBabel::OBMol& OBmol, vector<PharmacophorePo
   std::vector<OpenBabel::OBRing*> rings = OBmol.GetSSSR();
   vector<OBRing*>::iterator i;
   vector<int>::iterator j; 
-  for (int i(0); i < rings.size(); ++i){
+  for (unsigned int i(0); i < rings.size(); ++i){
    
     (bool) rings[i]->findCenterAndNormal(center, norm1, norm2);
     for(j = rings[i]->_path.begin(); j != rings[i]->_path.end(); ++j){      
@@ -525,12 +525,12 @@ SmallMolecule::InitPharmacophore(OpenBabel::OBMol& OBmol, vector<PharmacophorePo
     }
   }
   /*## 7. Hydrophobic groups atoms*/
-  for(int h1=0;h1< hydrophobic_groups.size();++h1){
+  for(unsigned int h1=0;h1< hydrophobic_groups.size();++h1){
     PharmacophorePoint p;
     p.func = HPHOB;            
     p.hasNormal = false;                                
     vector<int> group_elements=hydrophobic_groups[h1];
-    for(int h2=0;h2 < group_elements.size();++h2){			
+    for(unsigned int h2=0;h2 < group_elements.size();++h2){			
       OBAtom *atom = OBmol.GetAtom(group_elements[h2]);      
       if(flag_in_pharmacophore[group_elements[h2]]){continue;}      
       int atomno     =group_elements[h2]; 
@@ -570,8 +570,8 @@ SmallMolecule::InitPharmacophore(OpenBabel::OBMol& OBmol, vector<PharmacophorePo
     }    
   }
   /*## 9. Calculate electrostatic potential for each atom*/
-  for(int i=0; i <Phar.size(); ++i){        
-    for(int j=0; j <Phar.size(); ++j){             
+  for(unsigned int i=0; i <Phar.size(); ++i){        
+    for(unsigned int j=0; j <Phar.size(); ++j){             
       if(Phar[j].includedBefore){continue;}
       double Xd=Phar[i].point.x-Phar[j].point.x;
       double Yd=Phar[i].point.y-Phar[j].point.y;

@@ -144,7 +144,7 @@ double vectorAngle (double v1[3], double v2[3]){
 }
 /*************************************/
 void AlignVector(double CordVec1[3], double CordVec2[3], double rotationMatrix[3][3]){
-   double CordVec3[3]={0}, CordVec4[3]={0}, RM[3][3]={0};
+   double CordVec3[3]={0}, RM[3][3]={0};
 
    crossProduct(CordVec1,CordVec2,CordVec3);   
    double VecLength=sqrt((CordVec3[0]*CordVec3[0]) + (CordVec3[1]*CordVec3[1]) + (CordVec3[2]*CordVec3[2]));
@@ -180,7 +180,7 @@ void AlignVector(double CordVec1[3], double CordVec2[3], double rotationMatrix[3
 /*************************************/
 std::string cleanS(string S ){
   string C;
-  for(int j=0; j<S.length(); j++){
+  for(unsigned int j=0; j<S.length(); j++){
     if(S[j]==' '){
       continue;
     }
@@ -250,7 +250,7 @@ PVal(const double val, const double v1, const double v2, const int SC, const int
   double con = 0.0;      
   double a = 0.0, b = 0.0, c = 0.0, d = 0.0;
   double k1= 0.0, k2= 0.0, k3= 0.0, k4= 0.0, k5=0.0; 
-  double k6= 0.0, k7= 0.0, k8= 0.0, k9=0.0, k10=0.0;
+  double k6= 0.0, k7= 0.0, k8= 0.0, k9=0.0;
   double SIMp =0.0; double S0 =0.0; double mue=0; double sig=0.0;
   
   if((Optim == 0) && (SC==0)){

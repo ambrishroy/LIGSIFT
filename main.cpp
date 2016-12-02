@@ -26,17 +26,17 @@ using namespace std;
 using namespace OpenBabel;
 
 int main(int argc, char *argv[]){
-  string version ("LIGSIFT (v1.0)");
+  string version ("LIGSIFT (v1.2)");
 
   cout << " ********************************************************************************************* " << endl
        << " * "<<version <<": An open-source tool for ligand structural alignment and virtual screening * " << endl
        << " * Ambrish Roy & Jeffrey Skolnick                                                            * " << endl
-       << " * Please mail your comments to Ambrish Roy (ambrish.roy@biology.gatech.edu)                 * " << endl
+       << " * Please mail your comments to Ambrish Roy (ambrish.roy@gmail.com)                          * " << endl
        << " ********************************************************************************************* " << endl;
   
   std::string qFilename, dFilename, oFilename, sFilename, OptimInp;
   
-  bool vOpt= false; bool OptimOpt=false;
+  bool vOpt= false;
   bool qOpt= false; bool dbOpt= false; bool oOpt= false;
   int Optim=2; int sOpt=0;
   if(argc < 7){
@@ -82,6 +82,7 @@ int main(int argc, char *argv[]){
     exit(EXIT_FAILURE);
   }
   if(Optim >2){Optim=2;}
+
   
   ifstream qFile(qFilename.c_str());
   ifstream dFile(dFilename.c_str());
@@ -99,11 +100,10 @@ int main(int argc, char *argv[]){
   OBMol OBmol1, OBmol2, Dmol;
   SmallMolecule SM1, SM2;
   Pharmacophore QPharm, TPharm;
-  OBFormat     *inFormat1, *outFormat1,*inFormat2,*outFormat2;
+  OBFormat     *inFormat1, *inFormat2,*outFormat;
   OBConversion  OBconv1, OBconv2;
   vector<std::string> Qnames, Tnames;
   vector<PharmacophorePoint> PH;
-  FILE * pFILE;
   string ff1  = "MMFF94";
   string ff2  = "GAFF";
   
@@ -123,12 +123,11 @@ int main(int argc, char *argv[]){
   vector<OBMol> DBmol;
   ifstream ifs1(qFilename.c_str());
   ofstream ofs1;  
-  inFormat1 = OBconv1.FormatFromExt(qFilename.c_str());  
-  outFormat1= OBconv1.FindFormat("mol2");
-  OBconv1.SetInAndOutFormats(inFormat1,outFormat2);
+  inFormat1 = OBconv1.FormatFromExt(qFilename.c_str());
+  outFormat = OBconv2.FindFormat("mol2");  
+  OBconv1.SetInAndOutFormats(inFormat1,outFormat);
   inFormat2 = OBconv2.FormatFromExt(dFilename.c_str());  
-  outFormat2= OBconv2.FindFormat("mol2");
-  OBconv2.SetInAndOutFormats(inFormat2,outFormat2);
+  OBconv2.SetInAndOutFormats(inFormat2,outFormat);
   //##############Start with query Ligand file###############//
   bool notatend = OBconv1.ReadFile(&OBmol1,qFilename);
   while (notatend){    
@@ -200,7 +199,6 @@ int main(int argc, char *argv[]){
   
   FILE * oFILE;
   int ic=0;
-  double conS=0.50, conC=0.40;
   std::map<int,int> Alignment;
   double RMSD; 
   double T[3]={0}; double R[3][3]={0}; double CordVec[3];
@@ -209,10 +207,15 @@ int main(int argc, char *argv[]){
   ScoreArr.resize(6);
   Volumes.resize(2);
   oFILE= fopen(oFilename.c_str(),"w");
+  if(vOpt){
+     printf("%-15s\t%-15s\t%-13s  %-13s   %-10s %-8s  %-13s %-13s %-13s %-13s\n","Database_name","Query_name","ShapeTanimoto","ChemTanimoto","ShapeSim","ChemSim","ShapeSimPval","ChemSimPval","TverskyShape","TverskyChem");    
+  }
+  fprintf (oFILE,"%-15s\t%-15s\t%-13s  %-13s   %-10s %-8s  %-13s %-13s %-13s %-13s\n","Database_name","Query_name","ShapeTanimoto","ChemTanimoto","ShapeSim","ChemSim","ShapeSimPval","ChemSimPval","TverskyShape","TverskyChem");
+  
   double **VECQ, **VECT;
-  for(int i=0;i<QPharm.size();++i){
+  for(unsigned int i=0;i<QPharm.size();++i){
     QPharmacophores=QPharm[i];
-    for(int j=0;j<TPharm.size();++j){
+    for(unsigned int j=0;j<TPharm.size();++j){
       TPharmacophores=TPharm[j];	
       ScoreArr[0]=0;ScoreArr[1]=0;ScoreArr[2]=0; ScoreArr[3]=0;ScoreArr[4]=0;ScoreArr[5]=0;
       Volumes[0] =0; Volumes[1]=0;      	
@@ -227,9 +230,9 @@ int main(int argc, char *argv[]){
       PVal(TCshape, v1, v2, 0, Optim, &sTCshape, &pval_shape);
       PVal(TCchem,  v1, v2, 1, Optim, &sTCchem,  &pval_chem);
       if(vOpt){
-	printf ("%-14s  Vol: %-9.3f  %-14s  Vol: %-9.3f  ShapeTanimoto: %-7.3f  ChemTanimoto: %-7.3f  ShapeSim: %-7.3f  ChemSim: %-7.3f  ShapeSimPval: %e  ChemSimPval: %e  TverskyShape: %-7.3f  TverskyChem: %-7.3f  ChargeTanimoto: %-7.3f\n",Tnames[j].c_str(), Volumes[0], Qnames[i].c_str(), Volumes[1], TCshape, TCchem, sTCshape, sTCchem, pval_shape, pval_chem, ScoreArr[2], ScoreArr[3], ScoreArr[4]);
+	printf("%-15s\t%-15s\t   %-13.3f  %-13.3f %-10.3f %-8.3f %e  %e    %-13.3f %-13.3f\n",Tnames[j].c_str(),Qnames[i].c_str(),TCshape, TCchem, sTCshape, sTCchem, pval_shape, pval_chem, ScoreArr[2], ScoreArr[3]); 
       }
-      fprintf (oFILE,"%-14s  Vol: %-9.3f  %-14s  Vol: %-9.3f  ShapeTanimoto: %-7.3f  ChemTanimoto: %-7.3f  ShapeSim: %-7.3f  ChemSim: %-7.3f  ShapeSimPval: %e  ChemSimPval: %e  TverskyShape: %-7.3f  TverskyChem: %-7.3f  ChargeTanimoto: %-7.3f\n",Tnames[j].c_str(), Volumes[0], Qnames[i].c_str(), Volumes[1], TCshape, TCchem, sTCshape, sTCchem, pval_shape, pval_chem, ScoreArr[2], ScoreArr[3], ScoreArr[4]);
+      fprintf (oFILE,"%-15s\t%-15s\t   %-13.3f  %-13.3f %-10.3f %-8.3f %e  %e    %-13.3f %-13.3f\n",Tnames[j].c_str(),Qnames[i].c_str(),TCshape, TCchem, sTCshape, sTCchem, pval_shape, pval_chem, ScoreArr[2], ScoreArr[3]);
      
       if(sOpt==1){	
 	QPharmacophores.clear();TPharmacophores.clear();
@@ -269,7 +272,6 @@ int main(int argc, char *argv[]){
     }
   }
   fclose(oFILE);
-  
 
   return 0;
 }

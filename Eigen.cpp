@@ -12,7 +12,7 @@ using namespace std;
 bool Eigen(double A[3][3], double EigVec[3][3], double EigVal[3]){
   
   double p1=0, p2=0, p3=0, p4=0, p5=0, p6=0, p7=0, p8=0, p9=0, p10=0, p11=0;
-  double ap5=0, x=0, y=0, z=0, fnorm1=0;
+  double ap5=0, x=0, y=0, fnorm1=0;
 
   p1=-1;
   p2 =A[0][0] + A[1][1] + A[2][2];

@@ -14,23 +14,37 @@ Requirements
 2. A C++ compiler (e.g. GCC)
 3. OpenBabel
    Installation instruction (If you have already installed OpenBabel, skip to LIGSIFT compilation)    
-   (a) Download OpenBabel from
-       http://sourceforge.net/projects/openbabel/files/openbabel/2.3.2/openbabel-2.3.2.tar.gz/download
-   (b) tar zxf openbabel-2.3.2.tar.gz
+   (a) Download OpenBabel (v2.4.0) from
+       https://sourceforge.net/projects/openbabel/files/openbabel/2.4.0/openbabel-openbabel-2-4-0.tar.gz/download
+   (b) tar zxf openbabel-2.4.0.tar.gz
+
+          OR get the latest version from git using
+       git clone https://github.com/openbabel/openbabel.git 
+  
    (c) mkdir -p obbuild
    (d) cd obbuild
-   (e) cmake ../openbabel-2.3.2 
+   (e) cmake ../openbabel-2.4.X OR cmake ../openbabel
        If you don't have root permissions or you want to install at a different location:
-       cmake ../openbabel-2.3.2 -DCMAKE_INSTALL_PREFIX=/home/ambrish/bin/
+       cmake ../openbabel-2.4.X -DCMAKE_INSTALL_PREFIX=/home/ambrish/bin/
    (f) make 
    (g) make test
    (i) make install
-If everything worked perfectly, you should have an obabel executable as /usr/local/bin/obabel
+If everything worked perfectly, you should have an obabel executable as /usr/local/bin/obabel or /home/ambrish/bin/openbabel/bin/obabel (depending on how you run cmake).
+
+This version of LIGSIFT (v 1.2) has been tested for openbabel-2.4.1 
+
+OTHER ENVIORNMENT VARIABLES TO SET:
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/ambrish/bin/openbabel/lib/
+export BABEL_LIBDIR=/home/ambrish/bin/openbabel/lib/openbabel/2.4.1/
+export BABEL_DATADIR=/home/ambrish/bin/openbabel/share/openbabel/2.4.1/
+
 
 Compiling LIGSIFT
 =================
-4. Go to directory where you downloaded LIGSIFT.tar.bz2 and extract the files 
-   tar -jxvf LIGSIFT.tar.bz2 
+4. Download LIGSIFT from git using
+
+   git clone https://github.com/ambrishroy/LIGSIFT.git
+   
 5. cd LIGSIFT
 6. vi Makefile
    You may need to change your compiler (if not GCC) and CFLAGS and LDFLAGS (if you have installed OpenBabel at non-default location)
@@ -39,4 +53,4 @@ Compiling LIGSIFT
 
 You can enjoy fishing molecules now :)
 
-Please send your comments and suggestions to : ambrish.roy@biology.gatech.edu   
+Please send your comments and suggestions to : ambrish.roy AT gmail.com

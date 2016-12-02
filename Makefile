@@ -8,44 +8,45 @@
 #                                                                    #
 ######################################################################
 CC  = g++
-
-OBJ = main.o sm.o pharm.o coor.o alignment.o rmsd.o lap.o comm.o eigen.o
-CFLAGS = -c -I/usr/local/include/openbabel-2.0
-LDFLAGS = -lopenbabel -L/usr/local/lib
+CFLAGS	=-c -O3 -Wall
+INCLUDE =-I/home/nehamby/ambrish/bin/openbabel/include/openbabel-2.0
+LDFLAGS =-rdynamic /home/nehamby/ambrish/bin/openbabel/lib/libopenbabel.so -Wl,-rpath,/home/nehamby/ambrish/bin/openbabel/lib/
+LIBS	=-lm
 EXE = LIGSIFT
+OBJ = main.o sm.o pharm.o coor.o alignment.o rmsd.o lap.o comm.o eigen.o
 
 all: $(EXE)
 
 LIGSIFT: $(OBJ)
-	$(CC) $(LDFLAGS) $(OBJ) -O3 -o LIGSIFT
+	$(CC) $(LDFLAGS) $(OBJ) -o LIGSIFT  $(LDFLAGS)
 	@rm -f *.o
 
 main.o: main.cpp
-	$(CC) $(CFLAGS) $(LDFLAGS) -O3 main.cpp
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) main.cpp 
 
 sm.o: Smallmolecule.cpp
-	$(CC) $(CFLAGS) $(LDFLAGS) -c Smallmolecule.cpp -O3 -o sm.o
+	$(CC) $(CFLAGS) $(INCLUDE) $(LIBS) Smallmolecule.cpp -o sm.o
 
 alignment.o: Alignment.cpp 
-	$(CC) -c Alignment.cpp -O3 -o alignment.o
+	$(CC) $(CFLAGS) Alignment.cpp -o alignment.o
 
 pharm.o: Pharmacophores.cpp
-	$(CC) -c Pharmacophores.cpp -O3 -o pharm.o
+	$(CC) $(CFLAGS) Pharmacophores.cpp -o pharm.o
 
 rmsd.o: RMSD.cpp
-	$(CC) -c RMSD.cpp -o rmsd.o
+	$(CC) $(CFLAGS) RMSD.cpp -o rmsd.o
 
 coor.o: Coordinate.cpp
-	$(CC) -c Coordinate.cpp -O3 -o coor.o
+	$(CC) $(CFLAGS) Coordinate.cpp -o coor.o
 
 lap.o: LAP.cpp
-	$(CC) -c LAP.cpp -O3 -o lap.o
+	$(CC) $(CFLAGS) LAP.cpp -o lap.o
 
 comm.o: Common.cpp
-	$(CC) -c Common.cpp -O3 -o comm.o
+	$(CC) $(CFLAGS) Common.cpp -o comm.o
 
 eigen.o: Eigen.cpp
-	$(CC) -c Eigen.cpp -O3 -o eigen.o
+	$(CC) $(CFLAGS) Eigen.cpp -o eigen.o
 
 clean:
 	@rm -f *.o  LIGSIFT

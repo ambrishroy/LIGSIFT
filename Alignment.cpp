@@ -17,13 +17,12 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   vector<PharmacophorePoint> TPharmacophores;
   vector<PharmacophorePoint> TPharmacophores2;
   std::map<int,int> Alignment;
-  int NEXCL1=0, NEXCL2=0;  
   
   
   Coordinate P1Center, P2Center;
   double V1shape(0.0), V2shape(0.0), V1chem(0.0), V2chem(0.0), maxoverlap(0.00);
   double V1charge(0.0), V2charge(0.0), INTERFACE(0.0);
-  double CordVec1[3], CordVec2[3], CordVec3[3], CordVec4[3];  
+  double CordVec1[3], CordVec2[3];  
   double RMSD; double RM[3][3]={0};
   
   
@@ -42,8 +41,7 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   
   P1Center.x =0; P1Center.y=0; P1Center.z=0;  
   for(int i=0; i <npharm1; ++i){       
-    if(P1[i].includedBefore){continue;}
-    double D=0;   
+    if(P1[i].includedBefore){continue;}   
     double alpha1 = P1[i].alpha;    
     double v1     = GCI * pow((PI/alpha1), 1.5);      
     P1[i].vol=v1;
@@ -74,16 +72,16 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
     //cout << i << " " << P1[i].func << " " << P1[i].vdw << endl; 
     if(P1[i].includedBefore){continue;}    
     double v1    = P1[i].vol;
-    TM1[0][0] += v1 * P1[i].point.x * P1[i].point.x;
+    TM1[0][0] += v1 * ((P1[i].point.y * P1[i].point.y) + (P1[i].point.z * P1[i].point.z));
+    TM1[1][1] += v1 * ((P1[i].point.z * P1[i].point.z) + (P1[i].point.x * P1[i].point.x));
+    TM1[2][2] += v1 * ((P1[i].point.x * P1[i].point.x) + (P1[i].point.y * P1[i].point.y));
     TM1[0][1] += v1 * P1[i].point.x * P1[i].point.y;
     TM1[0][2] += v1 * P1[i].point.x * P1[i].point.z;
-    TM1[1][1] += v1 * P1[i].point.y * P1[i].point.y;
-    TM1[1][2] += v1 * P1[i].point.y * P1[i].point.z;
-    TM1[2][2] += v1 * P1[i].point.z * P1[i].point.z;    
-  }  
-  TM1[1][0] = TM1[0][1];
-  TM1[2][0] = TM1[0][2];
-  TM1[2][1] = TM1[1][2];
+    TM1[1][2] += v1 * P1[i].point.y * P1[i].point.z;   
+  }
+  TM1[0][1] = - TM1[0][1]; TM1[0][2] = - TM1[0][2]; TM1[1][2] = - TM1[1][2];
+  TM1[1][0] = TM1[0][1]; TM1[2][0] = TM1[0][2]; TM1[2][1] = TM1[1][2];
+
   for(int k=0; k<3; k++)
     for(int l=0; l< 3; l++)
       TM1[k][l] /= V1shape;
@@ -95,7 +93,6 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   P2Center.x =0; P2Center.y=0; P2Center.z=0; 
   for(int j=0; j <npharm2; ++j){
     if(P2[j].includedBefore){continue;}
-    double D=0;
     double alpha1 = P2[j].alpha;
     double v1     = GCI * pow((PI/alpha1), 1.5);     
     INTF +=P2[j].interactions * v1;
@@ -124,17 +121,17 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
     } 
     //cout << j << " " << P2[j].func << " " << P2[j].vdw << endl;
     if(P2[j].includedBefore){continue;}
-    double v2    = P2[j].vol;   
-    TM2[0][0] += v2 * P2[j].point.x * P2[j].point.x;
+    double v2    = P2[j].vol;
+    TM2[0][0] += v2 * ((P2[j].point.y * P2[j].point.y) + (P2[j].point.z * P2[j].point.z));
+    TM2[1][1] += v2 * ((P2[j].point.z * P2[j].point.z) + (P2[j].point.x * P2[j].point.x));
+    TM2[2][2] += v2 * ((P2[j].point.x * P2[j].point.x) + (P2[j].point.y * P2[j].point.y));
     TM2[0][1] += v2 * P2[j].point.x * P2[j].point.y;
     TM2[0][2] += v2 * P2[j].point.x * P2[j].point.z;
-    TM2[1][1] += v2 * P2[j].point.y * P2[j].point.y;
-    TM2[1][2] += v2 * P2[j].point.y * P2[j].point.z;
-    TM2[2][2] += v2 * P2[j].point.z * P2[j].point.z;    
-  }  
-  TM2[1][0] = TM2[0][1];
-  TM2[2][0] = TM2[0][2];
-  TM2[2][1] = TM2[1][2];
+    TM2[1][2] += v2 * P2[j].point.y * P2[j].point.z;   
+  }
+  TM2[0][1] = - TM2[0][1]; TM2[0][2] = - TM2[0][2]; TM2[1][2] = - TM2[1][2];
+  TM2[1][0] = TM2[0][1]; TM2[2][0] = TM2[0][2]; TM2[2][1] = TM2[1][2];
+  
   for(int k=0; k<3; k++)
     for(int l=0; l< 3; l++)
       TM2[k][l] /= V2shape;
@@ -421,7 +418,7 @@ void OverlapScore(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2
   *ChemScore =0; // Initialize the score to 0
   *ChargeScore=0;// Initialize the score to 0
 
-  double Shape = 0.00, Chem = 0.00, Charge=0.00, INTF=0.00;
+  double Shape = 0.00, Chem = 0.00, Charge=0.00;
   Aln.clear();
   FillMatrix(MAT, P1, P2, Opt);
   lap(npharm_max, MAT, Row, Col, U, V); 
@@ -441,7 +438,6 @@ void OverlapScore(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2
     CordVec2[1]=P2[j].point.y;
     CordVec2[2]=P2[j].point.z;
     double D = distsq(CordVec1,CordVec2);   
-    double D2= P1[i].vdw+P2[j].vdw;
     if(D < 6.5){
       Aln.insert(std::make_pair(i,j));
       Vec1[k][0] = P1[i].point.x;
@@ -499,9 +495,7 @@ void OverlapScore(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2
     CordVec2[2] = P2[j].point.z;	    
     double alphaX2 = P2[j].alpha;
  
-    double D = distsq(CordVec1, CordVec2);
-    double D2= P1[i].vdw+P2[j].vdw;
-    
+    double D = distsq(CordVec1, CordVec2);   
     
     double OShape  = 1.00, OChem = 0.00, OCharge=1.00;     
     double GaussO  = (GCI2 * pow(PI/(alphaX1 + alphaX2), 1.5)) * exp(-(alphaX1 * alphaX2 * D)/(alphaX1 + alphaX2));
@@ -558,7 +552,6 @@ void FillMatrix(double **M, vector<PharmacophorePoint>& P1 ,vector<Pharmacophore
       Vec2[2]=P2[j].point.z;
       double alphaX2 = P2[j].alpha;      
       double D = distsq(Vec1, Vec2);
-      double D2= P1[i].vdw+P2[j].vdw;
       
       double OShape  = 1.00, OChem = 0.00, OCharge=0.00;
       double GaussO  = (GCI2 * pow(PI/(alphaX1 + alphaX2), 1.5)) * exp(-(alphaX1 * alphaX2 * D)/(alphaX1 + alphaX2));            
@@ -620,7 +613,7 @@ norm(Coordinate& p){
   return sqrt(p.x*p.x + p.y*p.y + p.z*p.z);
 }
 
-double transformation(vector<PharmacophorePoint>& P, double R[3][3], double T[3]){    
+void transformation(vector<PharmacophorePoint>& P, double R[3][3], double T[3]){    
   int npharm=P.size();
   double CordVec1[3]={0}, CordVec2[3]={0};
   for(int k=0; k < npharm; ++k){
