@@ -26,7 +26,7 @@ using namespace std;
 using namespace OpenBabel;
 
 int main(int argc, char *argv[]){
-  string version ("LIGSIFT (v1.2)");
+  string version ("LIGSIFT (v1.3)");
 
   cout << " ********************************************************************************************* " << endl
        << " * "<<version <<": An open-source tool for ligand structural alignment and virtual screening * " << endl
