@@ -31,7 +31,7 @@ Requirements
    (i) make install
 If everything worked perfectly, you should have an obabel executable as /usr/local/bin/obabel or /home/ambrish/bin/openbabel/bin/obabel (depending on how you run cmake).
 
-This version of LIGSIFT (v 1.2) has been tested for openbabel-2.4.1 
+This version of LIGSIFT (v1.3) has been tested for openbabel-2.4.1 
 
 OTHER ENVIORNMENT VARIABLES TO SET:
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/home/ambrish/bin/openbabel/lib/
