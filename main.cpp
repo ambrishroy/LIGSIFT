@@ -250,6 +250,13 @@ int main(int argc, char *argv[]){
 	    ++pno;	  
 	  }
 	  Kabsch(VECT, VECQ, 3, 1, &RMSD, T, R);
+	  if(vOpt){
+	      printf("Transformation matrix to rotate Database molecule on query -----\n");
+              printf("i\t%18s %15s %15s %15s\n", "T[i]", "R[i][0]", "R[i][1]", "R[i][2]");
+              for (unsigned int k = 0; k < 3; k++){
+                 printf("%d\t%18.10f %15.10f %15.10f %15.10f\n", k, T[k], R[k][0], R[k][1], R[k][2]);
+              }
+          }
 	  Dmol=DBmol[j];
 	  FOR_ATOMS_OF_MOL(atom,Dmol){   
 	    CordVec[0]=atom->x();
