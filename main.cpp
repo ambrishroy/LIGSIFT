@@ -26,7 +26,7 @@ using namespace std;
 using namespace OpenBabel;
 
 int main(int argc, char *argv[]){
-  string version ("LIGSIFT (v1.3)");
+  string version ("LIGSIFT (v1.4)");
 
   cout << " ********************************************************************************************* " << endl
        << " * "<<version <<": An open-source tool for ligand structural alignment and virtual screening * " << endl
@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
   std::string qFilename, dFilename, oFilename, sFilename, OptimInp;
   
   bool vOpt= false;
-  bool qOpt= false; bool dbOpt= false; bool oOpt= false;
+  bool qOpt= false; bool dbOpt= false; bool oOpt= false; bool rOpt= false;
   int Optim=2; int sOpt=0;
   if(argc < 7){
     cout << endl
@@ -51,6 +51,7 @@ int main(int argc, char *argv[]){
          << "        -opt  0(Overlap optimized based on Shape similarity)" << endl
          << "              1(Overlap optimized based on Shape + Chemical similarity)" << endl
          << "              2(Overlap optimized based on Chemical similarity:Default method)" << endl
+         << "        -r    Don't add Hydrogen automatically to molecules" << endl 
          << "For example:" << endl << endl
          << "./LIGSIFT -q ZINCXXX.mol2   -db DB.mol2   -o alignment_scores.txt   -s superposed.mol2" << endl << endl;
     return 1;
@@ -67,6 +68,7 @@ int main(int argc, char *argv[]){
     if(!strcmp(argv[i],"-opt")&& i < argc ) { OptimInp       = string(argv[i+1]); Optim= atoi(OptimInp.c_str());}
     if(!strcmp(argv[i],"-v")  && i < argc ) { vOpt           = true;}
     if(!strcmp(argv[i],"-V")  && i < argc ) { vOpt           = true;}
+    if(!strcmp(argv[i],"-r")  && i < argc ) { rOpt           = true;}
   }
   
   if (!qOpt){
@@ -130,8 +132,10 @@ int main(int argc, char *argv[]){
   OBconv2.SetInAndOutFormats(inFormat2,outFormat);
   //##############Start with query Ligand file###############//
   bool notatend = OBconv1.ReadFile(&OBmol1,qFilename);
-  while (notatend){    
-    (bool) OBmol1.AddPolarHydrogens();
+  while (notatend){
+    if(!rOpt){
+      (bool) OBmol1.AddPolarHydrogens();
+    }
     string MolID = OBmol1.GetTitle();
     if(!pFF1->Setup(OBmol1)){     
       pFF1 = OBForceField::FindForceField(ff2);
@@ -154,8 +158,10 @@ int main(int argc, char *argv[]){
    
   //##############Now read database molecules###############//
   bool notatend2 = OBconv2.ReadFile(&OBmol2,dFilename);
-  while (notatend2){    
-    (bool) OBmol2.AddPolarHydrogens();
+  while (notatend2){
+    if(!rOpt){    
+      (bool) OBmol2.AddPolarHydrogens();
+    }
     string MolID = OBmol2.GetTitle();
     if(!pFF2->Setup(OBmol2)){
       pFF2 = OBForceField::FindForceField(ff2);
