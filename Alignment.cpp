@@ -23,7 +23,7 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   double V1shape(0.0), V2shape(0.0), V1chem(0.0), V2chem(0.0), maxoverlap(0.00);
   double V1charge(0.0), V2charge(0.0), INTERFACE(0.0);
   double CordVec1[3], CordVec2[3];  
-  double RMSD; double RM[3][3]={0};
+  double RMSD; double RM[3][3]={{0}};
   
   
   double **MAT, **VEC1, **VEC2, **DIST1, **DIST2;
@@ -59,7 +59,7 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   P1Center.z /= V1shape;
   
 
-  double TM1[3][3]={0.00}, EVec1[3][3]={0}, EVal1[3]={0};
+  double TM1[3][3]={{0}}, EVec1[3][3]={{0}}, EVal1[3]={0};
   for(int i=0; i < npharm1; i++){    
     P1[i].point.x -= P1Center.x;
     P1[i].point.y -= P1Center.y;
@@ -109,7 +109,7 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   P2Center.y /= V2shape;
   P2Center.z /= V2shape;
  
-  double TM2[3][3]={0.00}, EVec2[3][3]={0}, EVal2[3]={0.00};
+  double TM2[3][3]={{0}}, EVec2[3][3]={{0}}, EVal2[3]={0};
   for(int j=0; j < npharm2; j++){   
     P2[j].point.x -= P2Center.x;
     P2[j].point.y -= P2Center.y;
@@ -178,7 +178,7 @@ Overlap(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2, vector<d
   }  
   Rg1 /=npharm1; Rg2 /= npharm2;
    
-  double T[3]={0}; double R[3][3]={0}; int bestPAxis=0;;  
+  double T[3]={0}; double R[3][3]={{0}}; int bestPAxis=0;;  
   double ShapeScore=0.0; double ChemScore=0; double ChargeScore=0.00; double INTFscore=0;
   double Delta=3.0; double maxR=0; int rotationStep=1;
  
@@ -413,7 +413,7 @@ void OverlapScore(vector<PharmacophorePoint>& P1, vector<PharmacophorePoint>& P2
   int npharm2=P2.size();
   int npharm_max =MAX(npharm1, npharm2); 
   double CordVec1[3]={0}, CordVec2[3]={0}; 
-  double RMSD=0; double T[3]={0}; double R[3][3]={0};
+  double RMSD=0; double T[3]={0}; double R[3][3]={{0}};
   *ShapeScore=0; // Initialize the score to 0
   *ChemScore =0; // Initialize the score to 0
   *ChargeScore=0;// Initialize the score to 0

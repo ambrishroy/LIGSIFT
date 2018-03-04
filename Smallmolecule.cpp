@@ -495,7 +495,7 @@ SmallMolecule::InitPharmacophore(OpenBabel::OBMol& OBmol, vector<PharmacophorePo
   vector<int>::iterator j; 
   for (unsigned int i(0); i < rings.size(); ++i){
    
-    (bool) rings[i]->findCenterAndNormal(center, norm1, norm2);
+//    (bool) rings[i]->findCenterAndNormal(center, norm1, norm2);
     for(j = rings[i]->_path.begin(); j != rings[i]->_path.end(); ++j){      
       int atomno     =*j;
       OBAtom *atom = OBmol.GetAtom(atomno);

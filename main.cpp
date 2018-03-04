@@ -37,7 +37,7 @@ int main(int argc, char *argv[]){
   std::string qFilename, dFilename, oFilename, sFilename, OptimInp;
   
   bool vOpt= false;
-  bool qOpt= false; bool dbOpt= false; bool oOpt= false; bool rOpt= false;
+  bool qOpt= false; bool dbOpt= false; bool oOpt= false; bool rOpt= true;
   int Optim=2; int sOpt=0;
   if(argc < 7){
     cout << endl
@@ -68,7 +68,7 @@ int main(int argc, char *argv[]){
     if(!strcmp(argv[i],"-opt")&& i < argc ) { OptimInp       = string(argv[i+1]); Optim= atoi(OptimInp.c_str());}
     if(!strcmp(argv[i],"-v")  && i < argc ) { vOpt           = true;}
     if(!strcmp(argv[i],"-V")  && i < argc ) { vOpt           = true;}
-    if(!strcmp(argv[i],"-r")  && i < argc ) { rOpt           = true;}
+    if(!strcmp(argv[i],"-r")  && i < argc ) { rOpt           = false;}
   }
   
   if (!qOpt){
@@ -133,8 +133,8 @@ int main(int argc, char *argv[]){
   //##############Start with query Ligand file###############//
   bool notatend = OBconv1.ReadFile(&OBmol1,qFilename);
   while (notatend){
-    if(!rOpt){
-      (bool) OBmol1.AddPolarHydrogens();
+    if(rOpt){
+      OBmol1.AddPolarHydrogens();
     }
     string MolID = OBmol1.GetTitle();
     if(!pFF1->Setup(OBmol1)){     
@@ -159,8 +159,8 @@ int main(int argc, char *argv[]){
   //##############Now read database molecules###############//
   bool notatend2 = OBconv2.ReadFile(&OBmol2,dFilename);
   while (notatend2){
-    if(!rOpt){    
-      (bool) OBmol2.AddPolarHydrogens();
+    if(rOpt){    
+      OBmol2.AddPolarHydrogens();
     }
     string MolID = OBmol2.GetTitle();
     if(!pFF2->Setup(OBmol2)){
@@ -207,7 +207,7 @@ int main(int argc, char *argv[]){
   int ic=0;
   std::map<int,int> Alignment;
   double RMSD; 
-  double T[3]={0}; double R[3][3]={0}; double CordVec[3];
+  double T[3]={0}; double R[3][3]={{0}}; double CordVec[3]={0};
   std::vector<double> ScoreArr;
   std::vector<double> Volumes;
   ScoreArr.resize(6);

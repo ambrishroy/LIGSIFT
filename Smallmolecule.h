@@ -35,12 +35,10 @@ class SmallMolecule{
   bool           *flag_ring_aromatic;
   bool           *flag_ring_nonaromatic;
   bool           *flag_ring;
-  bool           *flag_nonring;
   bool           *flag_in_pharmacophore;
   double         *radii;
   double         *ringradii;
   std::vector< std::vector<int> > hydrophobic_groups;			
-  unsigned int    Nhydro;
  
   Coordinate		CalcNormal(OpenBabel::OBAtom*);  
 };

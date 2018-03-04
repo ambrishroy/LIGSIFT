@@ -1,5 +1,5 @@
 #include "RMSD.h"
-using namespace std;
+//using namespace std;
 
 /**************************************************************************
   Implemetation of Kabsch algoritm for finding the best rotation matrix
@@ -18,7 +18,7 @@ bool Kabsch(double **x, double **y, int n, int mode, double *rms, double t[3], d
   double e0=0, rms1=0, d=0, h=0, g=0;
   double cth=0, sth=0, sqrth=0, p=0, det=0, sigma=0;  
   double xc[3]={0}, yc[3]={0};
-  double a[3][3]={0}, b[3][3]={0}, r[3][3]={0}, e[3]={0}, rr[6]={0}, ss[6]={0};
+  double a[3][3]={{0}}, b[3][3]={{0}}, r[3][3]={{0}}, e[3]={0}, rr[6]={0}, ss[6]={0};
   double sqrt3=1.73205080756888, tol=0.01;
   int ip[]={0, 1, 3, 1, 2, 4, 3, 4, 5};
   int ip2312[]={1, 2, 0, 1};
